@@ -1,11 +1,12 @@
 FROM perl:5.36
 
-RUN cpanm Mojolicious Mojolicious::Plugin::GraphQL Net::SNMP
+# Installer App::cpanminus (mere stabil)
+RUN curl -L https://cpanmin.us | perl - App::cpanminus
 
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
+# Installer Mojolicious og Net::SNMP
+RUN cpanm Mojolicious Net::SNMP
 
-COPY . /app
 WORKDIR /app
+COPY myapp.pl .
 
-CMD ["/run.sh"]
+CMD ["perl", "myapp.pl"]
