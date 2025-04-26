@@ -5,7 +5,7 @@ use Mojolicious::Lite;
 
 get '/' => sub {
   my $c = shift;
-  $c->render(text => 'Hello from Perl & Mojolicious!');
+  $c->render(text => 'Hello from Perl & Mojolicios!');
 };
 
 app->start('daemon', '-l', 'http://*:3000');
