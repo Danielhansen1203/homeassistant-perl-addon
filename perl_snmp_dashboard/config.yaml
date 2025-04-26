@@ -1,0 +1,13 @@
+name: "Perl SNMP Dashboard"
+version: "1.0.0"
+slug: "perl_snmp_dashboard"
+description: "Et Home Assistant add-on der kører en Perl Mojolicious app med SNMP."
+startup: services
+boot: auto
+host_network: true
+arch:
+  - amd64
+  - aarch64
+  - armv7
+options: {}
+schema: {}
