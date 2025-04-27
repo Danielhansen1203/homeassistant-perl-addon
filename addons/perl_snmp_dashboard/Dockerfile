@@ -1,33 +1,27 @@
 FROM perl:5.36
 
-# Installer OS-pakker
+# Installer OS-pakker til at bygge Perl moduler
 RUN apt-get update && apt-get install -y build-essential libssl-dev libperl-dev zlib1g-dev curl make gcc
 
 # Installer App::cpanminus
 RUN curl -L https://cpanmin.us | perl - App::cpanminus
 
-# Installer GraphQL + nødvendige moduler
-RUN cpanm --notest --verbose \
-  GraphQL \
-  Moo \
-  Role::Tiny \
-  JSON::MaybeXS \
-  Try::Tiny \
-  Sub::Util
+# Installer GraphQL (via plugin der sikrer ObjectType mm.)
+RUN cpanm --notest --verbose GraphQL::Plugin::Convert::OpenAPI
 
-# Installer Mojolicious og GraphQL Plugin
+# Installer Mojolicious + Plugin
 RUN cpanm --notest Mojolicious Mojolicious::Plugin::GraphQL
 
-# Eventuelt SNMP senere
+# Installer Net::SNMP hvis du skal bruge SNMP
 RUN cpanm --notest Net::SNMP
 
-# Sæt arbejdsmappe
+# Arbejdsmappe
 WORKDIR /app
 
-# Kopiér app
+# Kopier kode
 COPY myapp.pl .
 
-# Eksponer port
+# Eksponer port 3000
 EXPOSE 3000
 
 # Start server
