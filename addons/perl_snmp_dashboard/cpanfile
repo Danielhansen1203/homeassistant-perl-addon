@@ -1,0 +1,8 @@
+requires 'Mojolicious';
+requires 'Net::SNMP';
+requires 'GraphQL';
+requires 'GraphQL::Plugin::Convert::OpenAPI';
+requires 'Mojolicious::Plugin::GraphQL';
+requires 'Moo';
+requires 'Role::Tiny';
+requires 'JSON::MaybeXS';
