@@ -1,21 +1,21 @@
 FROM perl:5.36
 
-# Installer OS-værktøjer til at bygge CPAN moduler
-RUN apt-get update && apt-get install -y build-essential
+# Installer nødvendige OS-pakker
+RUN apt-get update && apt-get install -y build-essential curl
 
-# Installer App::cpanminus
+# Installer cpanminus
 RUN curl -L https://cpanmin.us | perl - App::cpanminus
 
-# Først installer GraphQL (nu virker det!)
-RUN cpanm --quiet --notest GraphQL
+# Installer korrekt GraphQL
+RUN cpanm --notest --verbose TOBYINK/GraphQL-0.54.tar.gz
 
-# Installer resten af dine moduler
-RUN cpanm --quiet --notest Mojolicious Mojolicious::Plugin::GraphQL GraphQL::Plugin::Convert::OpenAPI Net::SNMP Moo Role::Tiny JSON::MaybeXS Try::Tiny Time::HiRes
+# Installer andre nødvendige moduler
+RUN cpanm --notest Mojolicious Mojolicious::Plugin::GraphQL GraphQL::Plugin::Convert::OpenAPI Net::SNMP Moo Role::Tiny JSON::MaybeXS Try::Tiny Time::HiRes
 
 # Sæt arbejdsmappe
 WORKDIR /app
 
-# Kopier Perl app
+# Kopiér koden
 COPY myapp.pl .
 
 # Eksponer port
